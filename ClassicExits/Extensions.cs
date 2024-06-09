@@ -30,7 +30,7 @@ namespace LuisRandomness.BBPClassicExits.Extensions
         public ClassicFinaleMode lightMode {get; private set; }
         public ClassicFinaleMode audioMode { get; private set; }
 
-        protected override void AwakeFunction()
+        public override void AwakeFunction()
         {
             fog = ClassicExitsPlugin.assetMan.Get<Fog>("ArchaicFog");
             ec = BaseGameManager.Instance.Ec;

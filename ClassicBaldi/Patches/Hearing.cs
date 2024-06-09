@@ -7,12 +7,12 @@ namespace LuisRandomness.BBPClassicBaldi.Patches.Hearing
     [HarmonyPatch("Hear")]
     public class BaldiHearPatch
     {
-        static void Prefix(Vector3[] ___soundLocations, ref int ___currentSoundVal, int value, ref bool indicator)
+        private static void Prefix(Vector3[] ___soundLocations, ref int ___currentSoundVal, int value, ref bool indicator)
         {
             if (ClassicBaldiPlugin.config_disableBaldicator.Value)
                 indicator = false;
 
-            if (!ClassicBaldiPlugin.config_overridePreviousNoises.Value) return;
+            if (!ClassicBaldiPlugin.config_loudestSoundOnly.Value) return;
 
             // Bump up the current sound value
             if (value > ___currentSoundVal || value == 127)
@@ -31,7 +31,7 @@ namespace LuisRandomness.BBPClassicBaldi.Patches.Hearing
     {
         internal static int overrideValue = -1;
 
-        static bool Prefix(ref int value)
+        private static bool Prefix(ref int value)
         {
             if (overrideValue >= 0)
                 value = overrideValue;
@@ -41,7 +41,7 @@ namespace LuisRandomness.BBPClassicBaldi.Patches.Hearing
             if (value <= 0) return false;
 
             // Run script as normal if Classic Noises are disabled or the value is either 1 or 127
-            if (!ClassicBaldiPlugin.config_classicNoiseValues.Value || value == 1 || value == 127)
+            if (!ClassicBaldiPlugin.config_classicSoundValues.Value || value == 1 || value == 127)
                 return true;
 
             /* Simplifies all noises into 3 tiers:
@@ -64,9 +64,9 @@ namespace LuisRandomness.BBPClassicBaldi.Patches.Hearing
     [HarmonyPatch("Close")]
     public class ElevatorCloseChange
     {
-        static void Prefix()
+        private static void Prefix()
         {
-            if (ClassicBaldiPlugin.config_classicNoiseValues.Value)
+            if (ClassicBaldiPlugin.config_classicSoundValues.Value)
                 NoiseHandlingPatch.overrideValue = 126;
         }
     }
@@ -74,9 +74,10 @@ namespace LuisRandomness.BBPClassicBaldi.Patches.Hearing
     [HarmonyPatch(typeof(MathMachine), "Start")]
     public class MathMachineInit
     {
-        static void Prefix(int ___wrongNoiseVal) {
+        private static void Prefix(int ___wrongNoiseVal)
+        {
             // Classic noise values
-            if (ClassicBaldiPlugin.config_classicNoiseValues.Value && ___wrongNoiseVal < 80)
+            if (ClassicBaldiPlugin.config_classicSoundValues.Value && ___wrongNoiseVal < 80)
                 ___wrongNoiseVal = 80;
         }
     }

@@ -1,22 +1,20 @@
 ﻿using BepInEx;
 using HarmonyLib;
-using MTM101BaldAPI.Registers;
+
 using MTM101BaldAPI;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
 using MTM101BaldAPI.AssetTools;
-using System.ComponentModel.Design;
+
 using BepInEx.Configuration;
-using UnityEngine.UIElements;
-using UnityEngine.Audio;
+
 using System.IO;
+
+using UnityEngine;
 
 namespace LuisRandomness.BBPClassicExits
 {
     [BepInPlugin(ModGuid, "Classic Exits", ModVersion)]
     [BepInDependency("mtm101.rulerp.bbplus.baldidevapi", BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("mtm101.rulerp.baldiplus.endlessfloors", BepInDependency.DependencyFlags.SoftDependency)]
     public class ClassicExitsPlugin : BaseUnityPlugin
     {
         public const string ModGuid = "io.github.luisrandomness.bbp_classic_exits";
@@ -40,32 +38,38 @@ namespace LuisRandomness.BBPClassicExits
 
         internal static ConfigEntry<ClassicFinaleMode> config_audioMode;
 
+        internal static ConfigEntry<bool> config_escapeMusic;
+
+
         void InitConfigValues()
         {
             config_gateMode = Config.Bind(
                 "General",
-                "gateReplacementMode",
+                "GateMode",
                 ClassicGateMode.Wall,
                 "Whether to replace elevator gates with walls and if a map of the level is provided alongside it.");
-
             config_lightMode = Config.Bind(
                 "General",
-                "tintMode",
+                "LightMode",
                 ClassicFinaleMode.Remastered,
                 "The mode of the red light that will appear when an elevator closes. 'Archaic' mode will add in a dark red fog.");
-
             config_audioMode = Config.Bind(
                 "General",
-                "audioMode",
+                "AudioMode",
                 ClassicFinaleMode.Remastered,
                 "The audio mode that will be used for playing the ambient loops after an elevator closes. 'Archaic' mode removes the 1st exit loop.");
+
+            config_escapeMusic = Config.Bind(
+                "General",
+                "EscapeMusic",
+                true,
+                "(NOT ADDED YET) Will play Schoolhouse Escape upon all notebooks being collected. If false, it will also disable the Endless Floors music patch.");
 
             config_lightColor = Config.Bind(
                 "Colors",
                 "lightColor",
                 Color.red,
                 "The color of the red light. Affects the color in Remastered and Classic modes.");
-
             config_fogColor = Config.Bind(
                 "Colors",
                 "fogColor",

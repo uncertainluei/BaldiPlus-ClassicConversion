@@ -15,7 +15,7 @@ namespace LuisRandomness.BBPClassicExits.Patches
             {
                 GameObject bgm = BaseGameManager.Instance.gameObject;
                 bgm.SetActive(false);
-                bgm.AddComponent<ClassicExitManager>().ReflectionSetVariable("destroyOnLoad", true);
+                bgm.AddComponent<ClassicExitManager>().destroyOnLoad = true;
                 bgm.SetActive(true);
             }
 
@@ -112,12 +112,26 @@ namespace LuisRandomness.BBPClassicExits.Patches
             }
 
             if (!cem.earlyLoopPlayed)
-                MusicManager.Instance.MidiPlayer.MPTK_Transpose = Random.Range(-24, -12);
-
-            if (___elevatorsToClose == 0)
             {
                 cem.earlyLoopPlayed = true;
+                MusicManager.Instance.MidiPlayer.MPTK_Transpose = Random.Range(-24, -12);
 
+                switch (cem.audioMode)
+                {
+                    case ClassicFinaleMode.Default:
+                        break;
+                    case ClassicFinaleMode.Remastered:
+                        MusicManager.Instance.StopFile();
+                        MusicManager.Instance.QueueFile(ClassicExitsPlugin.assetMan.Get<LoopingSoundObject>("Loop_Cr_Early"), true);
+                        break;
+                    default:
+                        MusicManager.Instance.StopFile();
+                        MusicManager.Instance.QueueFile(ClassicExitsPlugin.assetMan.Get<LoopingSoundObject>("Loop_Classic_Early"), true);
+                        break;
+                }
+            }
+            if (___elevatorsToClose == 0)
+            {
                 if (cem.lightMode == ClassicFinaleMode.Remastered)
                     cem.RemasteredFinal();
 
@@ -131,26 +145,6 @@ namespace LuisRandomness.BBPClassicExits.Patches
                     default:
                         MusicManager.Instance.StopFile();
                         MusicManager.Instance.QueueFile(ClassicExitsPlugin.assetMan.Get<LoopingSoundObject>("Loop_Classic_Buildup"), true);
-                        break;
-                }
-                return;
-            }
-
-            if (!cem.earlyLoopPlayed)
-            {
-                cem.earlyLoopPlayed = true;
-
-                switch (cem.audioMode)
-                {
-                    case ClassicFinaleMode.Default:
-                        break;
-                    case ClassicFinaleMode.Remastered:
-                        MusicManager.Instance.StopFile();
-                        MusicManager.Instance.QueueFile(ClassicExitsPlugin.assetMan.Get<LoopingSoundObject>("Loop_Cr_Early"), true);
-                        break;
-                    default:
-                        MusicManager.Instance.StopFile();
-                        MusicManager.Instance.QueueFile(ClassicExitsPlugin.assetMan.Get<LoopingSoundObject>("Loop_Classic_Early"), true);
                         break;
                 }
             }

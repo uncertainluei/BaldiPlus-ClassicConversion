@@ -3,6 +3,7 @@ using HarmonyLib;
 using MTM101BaldAPI;
 using MTM101BaldAPI.Registers;
 using UnityEngine;
+using BepInEx.Configuration;
 
 namespace LegacyPosterConversion
 {
@@ -25,7 +26,7 @@ namespace LegacyPosterConversion
             Resources.FindObjectsOfTypeAll<PosterObject>().Do((PosterObject x) =>
             {
                 mats = x.material;
-                if (mats?.Length > 0)
+                if (!x.name.Contains("_reflex") && mats?.Length > 0)
                 {
                     x.baseTexture = (Texture2D)mats[0].mainTexture;
                     x.textData = new PosterTextData[0];
