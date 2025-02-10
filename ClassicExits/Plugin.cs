@@ -12,12 +12,11 @@ using UnityEngine;
 
 namespace LuisRandomness.BBPClassicExits
 {
-    [BepInPlugin(ModGuid, "Classic Exits", ModVersion)]
+    [BepInPlugin(ModGuid, "Classic Conversion: Exits", ModVersion)]
     [BepInDependency("mtm101.rulerp.bbplus.baldidevapi", BepInDependency.DependencyFlags.HardDependency)]
-    [BepInDependency("mtm101.rulerp.baldiplus.endlessfloors", BepInDependency.DependencyFlags.SoftDependency)]
     public class ClassicExitsPlugin : BaseUnityPlugin
     {
-        public const string ModGuid = "io.github.luisrandomness.bbp_classic_exits";
+        public const string ModGuid = "io.github.uncertainluei.baldiplus.classicconversion.exits";
         public const string ModVersion = "2024.1.0.0";
 
         internal static AssetManager assetMan = new AssetManager();

@@ -22,9 +22,6 @@
 		<Reference Include="Assembly-CSharp" Publicize="true">
 			<HintPath>..\Dependencies\Assembly-CSharp.dll</HintPath>
 		</Reference>
-		<Reference Include="BaldiEndless" Publicize="true">
-			<HintPath>..\Dependencies\BaldiEndless.dll</HintPath>
-		</Reference>
 		<Reference Include="BepInEx">
 			<HintPath>..\Dependencies\BepInEx.dll</HintPath>
 		</Reference>

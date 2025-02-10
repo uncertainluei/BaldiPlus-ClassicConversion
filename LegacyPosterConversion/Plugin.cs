@@ -3,6 +3,7 @@ using HarmonyLib;
 using MTM101BaldAPI;
 using MTM101BaldAPI.Registers;
 using UnityEngine;
+using System.Collections;
 using BepInEx.Configuration;
 
 namespace LegacyPosterConversion
@@ -11,16 +12,18 @@ namespace LegacyPosterConversion
     [BepInDependency("mtm101.rulerp.bbplus.baldidevapi", BepInDependency.DependencyFlags.HardDependency)]
     public class PosterConversionPlugin : BaseUnityPlugin
     {
-        public const string ModGuid = "io.github.luisrandomness.bbp_legacy_poster_conversion";
-        public const string ModVersion = "2024.1.0.0";
+        public const string ModGuid = "io.github.uncertainluei.baldiplus.classicconversion.posters";
+        public const string ModVersion = "2025.1.0.0";
 
         void Awake()
         {
-            LoadingEvents.RegisterOnAssetsLoaded(OnAssetsLoaded, false);
+            LoadingEvents.RegisterOnAssetsLoaded(Info, OnAssetsLoaded(), false);
         }
 
-        void OnAssetsLoaded()
+        IEnumerator OnAssetsLoaded()
         {
+            yield return 1;
+            yield return "Converting vanilla posters";
             Material[] mats;
 
             Resources.FindObjectsOfTypeAll<PosterObject>().Do((PosterObject x) =>
@@ -33,6 +36,7 @@ namespace LegacyPosterConversion
                     x.MarkAsNeverUnload();
                 }
             });
+            yield break;
         }
     }
 }

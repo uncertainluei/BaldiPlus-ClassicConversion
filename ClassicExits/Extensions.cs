@@ -82,7 +82,7 @@ namespace LuisRandomness.BBPClassicExits.Extensions
                 originalLightStates[lights[num].position.x, lights[num].position.z] = lights[num].lightOn;
 
                 lights[num].lightColor = lightColor;
-                ec.SetLight(true, lights[num]);
+                lights[num].SetLight(false);
                 lights.RemoveAt(num);
                 yield return null;
             }
@@ -92,7 +92,7 @@ namespace LuisRandomness.BBPClassicExits.Extensions
             foreach (Cell light in ec.lights)
             {
                 light.lightColor = originalLightColors[light.position.x, light.position.z];
-                ec.SetLight(originalLightStates[light.position.x, light.position.z], light);
+                light.SetLight(originalLightStates[light.position.x, light.position.z]);
             }
 
             Shader.SetGlobalColor("_SkyboxColor", skyboxColor);

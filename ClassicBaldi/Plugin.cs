@@ -13,12 +13,11 @@ using UnityEngine;
 
 namespace LuisRandomness.BBPClassicBaldi
 {
-    [BepInPlugin(ModGuid, "Classic Baldi AI", ModVersion)]
+    [BepInPlugin(ModGuid, "Classic Conversion: Baldi", ModVersion)]
     [BepInDependency("mtm101.rulerp.bbplus.baldidevapi", BepInDependency.DependencyFlags.HardDependency)]
-    [BepInDependency("mtm101.rulerp.baldiplus.endlessfloors", BepInDependency.DependencyFlags.SoftDependency)]
     public class ClassicBaldiPlugin : BaseUnityPlugin
     {
-        public const string ModGuid = "io.github.luisrandomness.bbp_classic_baldi";
+        public const string ModGuid = "io.github.uncertainluei.baldiplus.classicconversion.baldi";
         public const string ModVersion = "2024.1.0.0";
 
         private void Awake()
