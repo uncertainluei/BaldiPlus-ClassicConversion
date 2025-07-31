@@ -82,7 +82,7 @@ namespace LuisRandomness.BBPClassicExits.Extensions
                 originalLightStates[lights[num].position.x, lights[num].position.z] = lights[num].lightOn;
 
                 lights[num].lightColor = lightColor;
-                lights[num].SetLight(false);
+                lights[num].SetLight(true);
                 lights.RemoveAt(num);
                 yield return null;
             }
